@@ -1,0 +1,11 @@
+[Unit]
+Description=Random One Nation Under God background at login and after waking from sleep
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.local/bin/one-nation-bg-shuffle --watch
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

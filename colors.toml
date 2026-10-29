@@ -1,0 +1,35 @@
+# America — Old Glory Red, White & Blue
+mode = "dark"
+
+accent = "#e0313f"
+selection = "#2a3a75"
+muted = "#55638f"
+
+hyprland_active_border = "rgba(e0313fee) rgba(f5f3eeee) rgba(3c5bb8ee) 45deg"
+hyprland_inactive_border = "rgba(1c2a55aa)"
+
+background = "#0b1633"
+dark_background = "#081027"
+darker_background = "#050a1b"
+lighter_background = "#1c2a55"
+
+foreground = "#f5f3ee"
+dark_foreground = "#8590b3"
+light_foreground = "#dcdfe9"
+bright_foreground = "#ffffff"
+
+red = "#e0313f"
+yellow = "#e8b84a"
+orange = "#ef7b45"
+green = "#7fb069"
+cyan = "#6fb7d9"
+blue = "#5b85e0"
+magenta = "#b77fd1"
+brown = "#8a6a45"
+
+bright_red = "#ff5a66"
+bright_yellow = "#ffd36e"
+bright_green = "#9fd18a"
+bright_cyan = "#93d2ee"
+bright_blue = "#86a8f2"
+bright_magenta = "#d3a3e8"

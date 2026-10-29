@@ -1,0 +1,31 @@
+#!/bin/bash
+# Switch to a random background (never the one showing now) for the current
+# One Nation Under God theme. Does nothing while any other theme is active.
+#
+# With --watch, shuffles once and then again each time the machine wakes from
+# sleep (logind's PrepareForSleep(false) signal). The systemd unit runs this.
+
+shuffle() {
+  local theme_name current bg candidates=()
+  theme_name=$(cat "$HOME/.local/state/omarchy/current/theme.name" 2>/dev/null)
+  [[ $theme_name == one-nation-under-god* || -n $ONE_NATION_SHUFFLE_ANY_THEME ]] || return 0
+
+  current=$(readlink -f "$HOME/.local/state/omarchy/current/background" 2>/dev/null)
+  while IFS= read -r -d '' bg; do
+    [[ $(readlink -f "$bg") == "$current" ]] || candidates+=("$bg")
+  done < <(
+    find -L "$HOME/.config/omarchy/backgrounds/$theme_name/" "$HOME/.local/state/omarchy/current/theme/backgrounds/" \
+      -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -print0 2>/dev/null
+  )
+  (( ${#candidates[@]} )) || return 0
+
+  omarchy-theme-bg-set "${candidates[RANDOM % ${#candidates[@]}]}"
+}
+
+shuffle
+[[ $1 == --watch ]] || exit 0
+
+gdbus monitor --system --dest org.freedesktop.login1 --object-path /org/freedesktop/login1 |
+  while read -r line; do
+    [[ $line == *PrepareForSleep*false* ]] && shuffle
+  done
